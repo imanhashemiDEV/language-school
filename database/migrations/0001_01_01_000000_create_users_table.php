@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('avatar')->nullable();
             $table->text('address')->nullable();
             $table->boolean('is_active')->default(true);
+            $table->boolean('is_admin')->default(false);
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

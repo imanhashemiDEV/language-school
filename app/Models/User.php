@@ -3,50 +3,29 @@
 
 namespace App\Models;
 
+use Illuminate\Console\Attributes\Hidden;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
+#[Fillable(['name', 'email', 'password','mobile','national_code',
+    'gender', 'birth_date', 'address', 'is_active','is_admin','avatar'])]
+#[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+    use HasFactory, Notifiable, SoftDeletes;
 
-    protected $fillable = [
-        'first_name',
-        'last_name',
-        'email',
-        'mobile',
-        'password',
-        'national_code',
-        'gender',
-        'birth_date',
-        'avatar',
-        'address',
-        'role',
-        'is_active',
-    ];
-
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
 
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'mobile_verified_at' => 'datetime',
         'password' => 'hashed',
         'birth_date' => 'date',
         'is_active' => 'boolean',
+        'is_admin' => 'boolean',
     ];
-
-    protected $appends = ['full_name'];
-
-    // Accessors
-    public function getFullNameAttribute(): string
-    {
-        return "{$this->first_name} {$this->last_name}";
-    }
 
     // Relationships
     public function student()
