@@ -25,13 +25,13 @@
                 داشبوردها
             </li>
             <li>
-                <a href="{{route('admin.panel.index')}}" class="side-menu__link side-menu__link--active ">
+                <a href="{{route('admin.panel.index')}}" class="side-menu__link @if(Route::is('admin.panel.index')) side-menu__link--active @endif">
                     <i data-tw-merge="" data-lucide="gauge-circle" class="stroke-[1] w-5 h-5 side-menu__link__icon"></i>
                     <div class="side-menu__link__title">صفحه اصلی</div>
                 </a>
             </li>
             <li>
-                <a href="{{route('admin.users.list')}}" class="side-menu__link side-menu__link--active ">
+                <a href="{{route('admin.users.list')}}" class="side-menu__link @if(Route::is('admin.users.list')) side-menu__link--active @endif ">
                     <i data-tw-merge="" data-lucide="users" class="stroke-[1] w-5 h-5 side-menu__link__icon"></i>
                     <div class="side-menu__link__title">کاربران</div>
                 </a>
