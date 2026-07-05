@@ -1,18 +1,29 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Contracts\Pagination\Paginator;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
+use Livewire\WithPagination;
 
-new #[Layout('admin::layouts.master'), Title('پنل مدیریت')]
+new #[Layout('admin::layouts.master', ['breadcrumb' => 'لیست کاربران']), Title('لیست کاربران')]
 class extends Component {
 
-    #[Computed()]
-    public function users()
+    use WithPagination;
+
+    public $total_users;
+
+    public function mount(): void
     {
-        return User::query()->take(10)->get();
+        $this->total_users = User::query()->get();
+    }
+
+    #[Computed()]
+    public function users(): Paginator
+    {
+        return User::query()->latest()->take(20)->paginate(10);
     }
 };
 ?>
@@ -29,7 +40,7 @@ class extends Component {
                         </div>
                         <div class="flex flex-col gap-x-3 gap-y-2 sm:flex-row rtl:md:mr-auto ltr:md:ml-auto">
                             <a href="{{route('admin.users.create')}}" data-tw-merge=""
-                                    class="transition duration-200 border shadow-sm inline-flex items-center justify-center py-2 px-3 rounded-md font-medium cursor-pointer focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus-visible:outline-none dark:focus:ring-slate-700 dark:focus:ring-opacity-50 [&:hover:not(:disabled)]:bg-opacity-90 [&:hover:not(:disabled)]:border-opacity-90 [&:not(button)]:text-center disabled:opacity-70 disabled:cursor-not-allowed bg-primary border-primary text-white dark:border-primary group-[.mode--light]:!border-transparent group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200">
+                               class="transition duration-200 border shadow-sm inline-flex items-center justify-center py-2 px-3 rounded-md font-medium cursor-pointer focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus-visible:outline-none dark:focus:ring-slate-700 dark:focus:ring-opacity-50 [&:hover:not(:disabled)]:bg-opacity-90 [&:hover:not(:disabled)]:border-opacity-90 [&:not(button)]:text-center disabled:opacity-70 disabled:cursor-not-allowed bg-primary border-primary text-white dark:border-primary group-[.mode--light]:!border-transparent group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200">
                                 <i data-tw-merge="" data-lucide="pen-line"
                                    class="rtl:ml-2 ltr:mr-2 h-4 w-4 stroke-[1.3]"></i>
                                 افزودن کاربری جدید
@@ -41,58 +52,35 @@ class extends Component {
                             <div class="grid grid-cols-4 gap-5">
                                 <div
                                     class="box col-span-4 rounded-[0.6rem] border border-dashed border-slate-300/80 p-5 shadow-sm md:col-span-2 xl:col-span-1">
-                                    <div class="text-base text-slate-500">کاربران ثبت‌نام کرده</div>
-                                    <div class="mt-1.5 text-2xl font-medium">{{$this->users->count()}}</div>
+                                    <div class="text-base text-slate-500">کل کاربران</div>
+                                    <div class="mt-1.5 text-2xl font-medium">{{$total_users->count()}}</div>
                                     <div
                                         class="absolute inset-y-0 rtl:left-0 ltr:right-0 rtl:ml-5 ltr:mr-5 flex flex-col justify-center">
-                                        <div
-                                            class="flex items-center rounded-full border border-danger/10 bg-danger/10 py-[2px] rtl:pr-[7px] ltr:pl-[7px] rtl:pl-1 ltr:pr-1 text-xs font-medium text-danger">
-                                            3%
-                                            <i data-tw-merge="" data-lucide="chevron-down"
-                                               class="rtl:mr-px ltr:ml-px h-4 w-4 stroke-[1.5]"></i>
-                                        </div>
                                     </div>
                                 </div>
                                 <div
                                     class="box col-span-4 rounded-[0.6rem] border border-dashed border-slate-300/80 p-5 shadow-sm md:col-span-2 xl:col-span-1">
-                                    <div class="text-base text-slate-500">فعال کاربران</div>
-                                    <div class="mt-1.5 text-2xl font-medium">{{$this->users->where('is_active', true)->count()}}</div>
+                                    <div class="text-base text-slate-500">کاربران فعال</div>
+                                    <div
+                                        class="mt-1.5 text-2xl font-medium">{{$total_users->where('is_active', true)->count()}}</div>
                                     <div
                                         class="absolute inset-y-0 rtl:left-0 ltr:right-0 rtl:ml-5 ltr:mr-5 flex flex-col justify-center">
-                                        <div
-                                            class="flex items-center rounded-full border border-success/10 bg-success/10 py-[2px] rtl:pr-[7px] ltr:pl-[7px] rtl:pl-1 ltr:pr-1 text-xs font-medium text-success">
-                                            2%
-                                            <i data-tw-merge="" data-lucide="chevron-up"
-                                               class="rtl:mr-px ltr:ml-px h-4 w-4 stroke-[1.5]"></i>
-                                        </div>
                                     </div>
                                 </div>
                                 <div
                                     class="box col-span-4 rounded-[0.6rem] border border-dashed border-slate-300/80 p-5 shadow-sm md:col-span-2 xl:col-span-1">
-                                    <div class="text-base text-slate-500">کاربران تازه وارد</div>
+                                    <div class="text-base text-slate-500">دانشجو</div>
                                     <div class="font-mediumm mt-1.5 text-2xl">489,223</div>
                                     <div
                                         class="absolute inset-y-0 rtl:left-0 ltr:right-0 rtl:ml-5 ltr:mr-5 flex flex-col justify-center">
-                                        <div
-                                            class="flex items-center rounded-full border border-danger/10 bg-danger/10 py-[2px] rtl:pr-[7px] ltr:pl-[7px] rtl:pl-1 ltr:pr-1 text-xs font-medium text-danger">
-                                            3%
-                                            <i data-tw-merge="" data-lucide="chevron-down"
-                                               class="rtl:mr-px ltr:ml-px h-4 w-4 stroke-[1.5]"></i>
-                                        </div>
                                     </div>
                                 </div>
                                 <div
                                     class="box col-span-4 rounded-[0.6rem] border border-dashed border-slate-300/80 p-5 shadow-sm md:col-span-2 xl:col-span-1">
-                                    <div class="text-base text-slate-500">ورود فعالیت</div>
+                                    <div class="text-base text-slate-500">استاد</div>
                                     <div class="font-mediumm mt-1.5 text-2xl">411,259</div>
                                     <div
                                         class="absolute inset-y-0 rtl:left-0 ltr:right-0 rtl:ml-5 ltr:mr-5 flex flex-col justify-center">
-                                        <div
-                                            class="flex items-center rounded-full border border-success/10 bg-success/10 py-[2px] rtl:pr-[7px] ltr:pl-[7px] rtl:pl-1 ltr:pr-1 text-xs font-medium text-success">
-                                            8%
-                                            <i data-tw-merge="" data-lucide="chevron-up"
-                                               class="rtl:mr-px ltr:ml-px h-4 w-4 stroke-[1.5]"></i>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -237,11 +225,11 @@ class extends Component {
                                         </td>
                                         <td data-tw-merge=""
                                             class="px-5 border-b dark:border-darkmode-300 border-t border-slate-200/60 bg-slate-50 py-4 font-medium text-slate-500">
-                                            سمت
+                                            نقش
                                         </td>
                                         <td data-tw-merge=""
                                             class="px-5 border-b dark:border-darkmode-300 w-52 border-t border-slate-200/60 bg-slate-50 py-4 font-medium text-slate-500">
-                                            تکمیل شدن پروفایل
+                                            موبایل
                                         </td>
                                         <td data-tw-merge=""
                                             class="px-5 border-b dark:border-darkmode-300 border-t border-slate-200/60 bg-slate-50 py-4 text-center font-medium text-slate-500">
@@ -249,7 +237,7 @@ class extends Component {
                                         </td>
                                         <td data-tw-merge=""
                                             class="px-5 border-b dark:border-darkmode-300 border-t border-slate-200/60 bg-slate-50 py-4 font-medium text-slate-500">
-                                            تاریخ پیوستن
+                                            تاریخ ثبت نام
                                         </td>
                                         <td data-tw-merge=""
                                             class="px-5 border-b dark:border-darkmode-300 w-20 border-t border-slate-200/60 bg-slate-50 py-4 text-center font-medium text-slate-500">
@@ -269,9 +257,8 @@ class extends Component {
                                                 class="px-5 border-b dark:border-darkmode-300 w-80 border-dashed py-4 dark:bg-darkmode-600">
                                                 <div class="flex items-center">
                                                     <div class="image-fit zoom-in h-9 w-9">
-                                                        <img data-placement="top" title="برد پیت"
-                                                             src="dist/images/users/user5-50x50.jpg"
-                                                             alt="تیل وایز - قالب داشبورد مدیریتی"
+                                                        <img data-placement="top"
+                                                             src="{{$user->avatar ? url('images/users/'. $user->avatar) : url('panel/images/users/profile.jpg')}}"
                                                              class="tooltip cursor-pointer rounded-full shadow-[0px_0px_0px_2px_#fff,_1px_1px_5px_rgba(0,0,0,0.32)] dark:shadow-[0px_0px_0px_2px_#3f4865,_1px_1px_5px_rgba(0,0,0,0.32)]">
                                                     </div>
                                                     <div class="rtl:mr-3.5 ltr:ml-3.5">
@@ -279,7 +266,7 @@ class extends Component {
                                                             {{$user->name}}
                                                         </a>
                                                         <div class="mt-0.5 whitespace-nowrap text-xs text-slate-500">
-                                                            {{$user->mobile}}
+                                                            {{$user->email}}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -289,20 +276,11 @@ class extends Component {
                                                 <a class="whitespace-nowrap font-medium" href="">
                                                     تحلیل‌گر داده
                                                 </a>
-                                                <div class="mt-0.5 whitespace-nowrap text-xs text-slate-500">
-                                                    تجزیه و تحلیل داده
-                                                </div>
                                             </td>
                                             <td data-tw-merge=""
                                                 class="px-5 border-b dark:border-darkmode-300 border-dashed py-4 dark:bg-darkmode-600">
                                                 <div class="w-40">
-                                                    <div class="text-xs text-slate-500">
-                                                        84%
-                                                    </div>
-                                                    <div class="mt-1.5 flex h-1 rounded-sm border bg-slate-50">
-                                                        <div
-                                                            class="rtl:first:rounded-r-sm ltr:first:rounded-l-sm rtl:last:rounded-l-sm ltr:last:rounded-r-sm border border-primary/20 -m-px bg-primary/40 w-[75%]"></div>
-                                                    </div>
+                                                    {{$user->mobile}}
                                                 </div>
                                             </td>
                                             <td data-tw-merge=""
@@ -360,62 +338,8 @@ class extends Component {
                                 </table>
                             </div>
                             <div
-                                class="flex-reverse flex flex-col-reverse flex-wrap items-center gap-y-2 p-5 sm:flex-row">
-                                <nav class="rtl:ml-auto ltr:mr-auto w-full flex-1 sm:w-auto">
-                                    <ul class="flex w-full rtl:ml-0 ltr:mr-0 rtl:sm:ml-auto ltr:sm:mr-auto sm:w-auto">
-                                        <li class="flex-1 sm:flex-initial">
-                                            <a data-tw-merge=""
-                                               class="transition duration-200 border items-center justify-center py-2 rounded-md cursor-pointer focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus-visible:outline-none dark:focus:ring-slate-700 dark:focus:ring-opacity-50 [&:hover:not(:disabled)]:bg-opacity-90 [&:hover:not(:disabled)]:border-opacity-90 [&:not(button)]:text-center disabled:opacity-70 disabled:cursor-not-allowed min-w-0 sm:min-w-[40px] shadow-none font-normal flex border-transparent text-slate-800 rtl:sm:ml-2 ltr:sm:mr-2 dark:text-slate-300 px-1 sm:px-3"><i
-                                                    data-tw-merge="" data-lucide="chevrons-left"
-                                                    class="stroke-[1] h-4 w-4 rtl:rotate-180"></i></a>
-                                        </li>
-                                        <li class="flex-1 sm:flex-initial">
-                                            <a data-tw-merge=""
-                                               class="transition duration-200 border items-center justify-center py-2 rounded-md cursor-pointer focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus-visible:outline-none dark:focus:ring-slate-700 dark:focus:ring-opacity-50 [&:hover:not(:disabled)]:bg-opacity-90 [&:hover:not(:disabled)]:border-opacity-90 [&:not(button)]:text-center disabled:opacity-70 disabled:cursor-not-allowed min-w-0 sm:min-w-[40px] shadow-none font-normal flex border-transparent text-slate-800 rtl:sm:ml-2 ltr:sm:mr-2 dark:text-slate-300 px-1 sm:px-3"><i
-                                                    data-tw-merge="" data-lucide="chevron-left"
-                                                    class="stroke-[1] h-4 w-4 rtl:rotate-180"></i></a>
-                                        </li>
-                                        <li class="flex-1 sm:flex-initial">
-                                            <a data-tw-merge=""
-                                               class="transition duration-200 border items-center justify-center py-2 rounded-md cursor-pointer focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus-visible:outline-none dark:focus:ring-slate-700 dark:focus:ring-opacity-50 [&:hover:not(:disabled)]:bg-opacity-90 [&:hover:not(:disabled)]:border-opacity-90 [&:not(button)]:text-center disabled:opacity-70 disabled:cursor-not-allowed min-w-0 sm:min-w-[40px] shadow-none font-normal flex border-transparent text-slate-800 rtl:sm:ml-2 ltr:sm:mr-2 dark:text-slate-300 px-1 sm:px-3">...</a>
-                                        </li>
-                                        <li class="flex-1 sm:flex-initial">
-                                            <a data-tw-merge=""
-                                               class="transition duration-200 border items-center justify-center py-2 rounded-md cursor-pointer focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus-visible:outline-none dark:focus:ring-slate-700 dark:focus:ring-opacity-50 [&:hover:not(:disabled)]:bg-opacity-90 [&:hover:not(:disabled)]:border-opacity-90 [&:not(button)]:text-center disabled:opacity-70 disabled:cursor-not-allowed min-w-0 sm:min-w-[40px] shadow-none font-normal flex border-transparent text-slate-800 rtl:sm:ml-2 ltr:sm:mr-2 dark:text-slate-300 px-1 sm:px-3">1</a>
-                                        </li>
-                                        <li class="flex-1 sm:flex-initial">
-                                            <a data-tw-merge=""
-                                               class="transition duration-200 border items-center justify-center py-2 rounded-md cursor-pointer focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus-visible:outline-none dark:focus:ring-slate-700 dark:focus:ring-opacity-50 [&:hover:not(:disabled)]:bg-opacity-90 [&:hover:not(:disabled)]:border-opacity-90 [&:not(button)]:text-center disabled:opacity-70 disabled:cursor-not-allowed min-w-0 sm:min-w-[40px] shadow-none font-normal flex border-transparent text-slate-800 rtl:sm:ml-2 ltr:sm:mr-2 dark:text-slate-300 px-1 sm:px-3 !box dark:bg-darkmode-400">2</a>
-                                        </li>
-                                        <li class="flex-1 sm:flex-initial">
-                                            <a data-tw-merge=""
-                                               class="transition duration-200 border items-center justify-center py-2 rounded-md cursor-pointer focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus-visible:outline-none dark:focus:ring-slate-700 dark:focus:ring-opacity-50 [&:hover:not(:disabled)]:bg-opacity-90 [&:hover:not(:disabled)]:border-opacity-90 [&:not(button)]:text-center disabled:opacity-70 disabled:cursor-not-allowed min-w-0 sm:min-w-[40px] shadow-none font-normal flex border-transparent text-slate-800 rtl:sm:ml-2 ltr:sm:mr-2 dark:text-slate-300 px-1 sm:px-3">3</a>
-                                        </li>
-                                        <li class="flex-1 sm:flex-initial">
-                                            <a data-tw-merge=""
-                                               class="transition duration-200 border items-center justify-center py-2 rounded-md cursor-pointer focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus-visible:outline-none dark:focus:ring-slate-700 dark:focus:ring-opacity-50 [&:hover:not(:disabled)]:bg-opacity-90 [&:hover:not(:disabled)]:border-opacity-90 [&:not(button)]:text-center disabled:opacity-70 disabled:cursor-not-allowed min-w-0 sm:min-w-[40px] shadow-none font-normal flex border-transparent text-slate-800 rtl:sm:ml-2 ltr:sm:mr-2 dark:text-slate-300 px-1 sm:px-3">...</a>
-                                        </li>
-                                        <li class="flex-1 sm:flex-initial">
-                                            <a data-tw-merge=""
-                                               class="transition duration-200 border items-center justify-center py-2 rounded-md cursor-pointer focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus-visible:outline-none dark:focus:ring-slate-700 dark:focus:ring-opacity-50 [&:hover:not(:disabled)]:bg-opacity-90 [&:hover:not(:disabled)]:border-opacity-90 [&:not(button)]:text-center disabled:opacity-70 disabled:cursor-not-allowed min-w-0 sm:min-w-[40px] shadow-none font-normal flex border-transparent text-slate-800 rtl:sm:ml-2 ltr:sm:mr-2 dark:text-slate-300 px-1 sm:px-3"><i
-                                                    data-tw-merge="" data-lucide="chevron-right"
-                                                    class="stroke-[1] h-4 w-4 rtl:rotate-180"></i></a>
-                                        </li>
-                                        <li class="flex-1 sm:flex-initial">
-                                            <a data-tw-merge=""
-                                               class="transition duration-200 border items-center justify-center py-2 rounded-md cursor-pointer focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus-visible:outline-none dark:focus:ring-slate-700 dark:focus:ring-opacity-50 [&:hover:not(:disabled)]:bg-opacity-90 [&:hover:not(:disabled)]:border-opacity-90 [&:not(button)]:text-center disabled:opacity-70 disabled:cursor-not-allowed min-w-0 sm:min-w-[40px] shadow-none font-normal flex border-transparent text-slate-800 rtl:sm:ml-2 ltr:sm:mr-2 dark:text-slate-300 px-1 sm:px-3"><i
-                                                    data-tw-merge="" data-lucide="chevrons-right"
-                                                    class="stroke-[1] h-4 w-4 rtl:rotate-180"></i></a>
-                                        </li>
-                                    </ul>
-                                </nav>
-                                <select data-tw-merge=""
-                                        class="disabled:bg-slate-100 disabled:cursor-not-allowed disabled:dark:bg-darkmode-800/50 [&[readonly]]:bg-slate-100 [&[readonly]]:cursor-not-allowed [&[readonly]]:dark:bg-darkmode-800/50 transition duration-200 ease-in-out w-full text-sm border-slate-200 shadow-sm py-2 px-3 rtl:pl-8 ltr:pr-8 focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus:border-primary focus:border-opacity-40 dark:bg-darkmode-800 dark:border-transparent dark:focus:ring-slate-700 dark:focus:ring-opacity-50 group-[.form-inline]:flex-1 rounded-[0.5rem] sm:w-20">
-                                    <option>10</option>
-                                    <option>25</option>
-                                    <option>35</option>
-                                    <option>50</option>
-                                </select>
+                                class="flex-reverse flex flex-col-reverse flex-wrap items-center justify-center gap-y-2 p-5 sm:flex-row">
+                                {{ $this->users->links('admin.layouts.pagination') }}
                             </div>
                         </div>
                     </div>

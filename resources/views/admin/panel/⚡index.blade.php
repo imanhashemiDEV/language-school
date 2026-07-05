@@ -4,7 +4,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-new #[Layout('admin::layouts.master'), Title('پنل مدیریت')]
+new #[Layout('admin::layouts.master' , ['breadcrumb' => '']), Title('پنل مدیریت')]
 class extends Component {
     //
 };
@@ -35,8 +35,7 @@ class extends Component {
                                             <div class="w-8 h-8 image-fit zoom-in">
                                                 <img
                                                     class="rounded-full shadow-[0px_0px_0px_2px_#fff,_1px_1px_5px_rgba(0,0,0,0.32)] dark:shadow-[0px_0px_0px_2px_#3f4865,_1px_1px_5px_rgba(0,0,0,0.32)]"
-                                                    src="dist/images/products/product8-400x400.jpg"
-                                                    alt="تیل وایز - قالب داشبورد مدیریتی">
+                                                    src="">
                                             </div>
                                             <div class="w-8 h-8 image-fit zoom-in rtl:-mr-3 ltr:-ml-3">
                                                 <img

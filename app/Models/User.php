@@ -28,15 +28,15 @@ class User extends Authenticatable
     ];
 
     // Relationships
-    public function student()
-    {
-        return $this->hasOne(Student::class);
-    }
-
-    public function teacher()
-    {
-        return $this->hasOne(Teacher::class);
-    }
+//    public function student()
+//    {
+//        return $this->hasOne(Student::class);
+//    }
+//
+//    public function teacher()
+//    {
+//        return $this->hasOne(Teacher::class);
+//    }
 
     // Scopes
     public function scopeActive($query)
@@ -44,34 +44,5 @@ class User extends Authenticatable
         return $query->where('is_active', true);
     }
 
-    public function scopeRole($query, $role)
-    {
-        return $query->where('role', $role);
-    }
-
-    public function scopeStudents($query)
-    {
-        return $query->where('role', 'student');
-    }
-
-    public function scopeTeachers($query)
-    {
-        return $query->where('role', 'teacher');
-    }
-
     // Methods
-    public function isAdmin(): bool
-    {
-        return in_array($this->role, ['admin', 'manager']);
-    }
-
-    public function isTeacher(): bool
-    {
-        return $this->role === 'teacher';
-    }
-
-    public function isStudent(): bool
-    {
-        return $this->role === 'student';
-    }
 }

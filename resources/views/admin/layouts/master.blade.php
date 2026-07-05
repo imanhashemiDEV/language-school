@@ -47,14 +47,11 @@
                         <!-- BEGIN: Breadcrumb -->
                         <nav aria-label="breadcrumb" class="flex flex-1 xl:block">
                             <ol class="flex items-center text-theme-1 dark:text-slate-300 text-white/90">
-                                <li class="">
-                                    <a href="">اپلیکیشن</a>
-                                </li>
-                                <li class="relative rtl:mr-5 ltr:ml-5 rtl:pr-0.5 ltr:pl-0.5 before:content-[''] before:w-[14px] before:h-[14px] before:bg-chevron-white before:transform rtl:before:rotate-[90deg] ltr:before:rotate-[-90deg] before:bg-[length:100%] rtl:before:-mr-[1.125rem] ltr:before:-ml-[1.125rem] before:absolute before:my-auto before:inset-y-0 dark:before:bg-chevron-white">
-                                    <a href="">داشبوردها</a>
+                                <li class="relative rtl:mr-5 ltr:ml-5 rtl:pr-0.5 ltr:pl-0.5 before:content-['']">
+                                    <a href="{{route('admin.panel.index')}}">صفحه اصلی</a>
                                 </li>
                                 <li class="relative rtl:mr-5 ltr:ml-5 rtl:pr-0.5 ltr:pl-0.5 before:content-[''] before:w-[14px] before:h-[14px] before:bg-chevron-white before:transform rtl:before:rotate-[90deg] ltr:before:rotate-[-90deg] before:bg-[length:100%] rtl:before:-mr-[1.125rem] ltr:before:-ml-[1.125rem] before:absolute before:my-auto before:inset-y-0 dark:before:bg-chevron-white text-white/70">
-                                    <a href="">آنالیزها</a>
+                                    {{$breadcrumb ?? ""}}
                                 </li>
                             </ol>
                         </nav>
