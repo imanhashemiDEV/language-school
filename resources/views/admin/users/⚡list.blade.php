@@ -7,6 +7,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Jantinnerezo\LivewireAlert\Facades\LivewireAlert;
 
 new #[Layout('admin::layouts.master', ['breadcrumb' => 'لیست کاربران']), Title('لیست کاربران')]
 class extends Component {
@@ -18,6 +19,12 @@ class extends Component {
     public function mount(): void
     {
         $this->total_users = User::query()->get();
+
+        if(session()->has('Success')){
+            LivewireAlert::title(session('Success'))
+                ->success()
+                ->show();
+        }
     }
 
     #[Computed()]
@@ -210,6 +217,12 @@ class extends Component {
                                 </div>
                             </div>
                             <div class="overflow-auto xl:overflow-visible">
+
+                                    <div role="alert" class="mx-5 alert relative border rounded-md px-5 py-4 border-primary text-primary dark:border-primary mb-2 flex items-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="alert-circle" class="lucide lucide-alert-circle stroke-[1] rtl:ml-2 ltr:mr-2 h-6 w-6"><circle cx="12" cy="12" r="10"></circle><line x1="12" x2="12" y1="8" y2="12"></line><line x1="12" x2="12.01" y1="16" y2="16"></line></svg>
+                                         {{session('message')}}
+                                        <button data-tw-dismiss="alert" type="button" aria-label="Close" class="text-slate-800 py-2 px-3 absolute rtl:left-0 ltr:right-0 my-auto rtl:ml-2 ltr:mr-2 btn-close"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x" class="lucide lucide-x stroke-[1] h-4 w-4"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
+                                    </div>
+
                                 <table data-tw-merge=""
                                        class="w-full rtl:text-right ltr:text-left border-b border-slate-200/60">
                                     <thead data-tw-merge="" class="">
@@ -296,7 +309,7 @@ class extends Component {
                                             <td data-tw-merge=""
                                                 class="px-5 border-b dark:border-darkmode-300 border-dashed py-4 dark:bg-darkmode-600">
                                                 <div class="whitespace-nowrap">
-                                                    23 آذر 1400
+                                                    {{ \Hekmatinasser\Verta\Facades\Verta::instance($user->created_at)->formatJalaliDate() }}
                                                 </div>
                                             </td>
                                             <td data-tw-merge=""
@@ -319,14 +332,15 @@ class extends Component {
                                                              class="dropdown-menu absolute z-[9999] hidden">
                                                             <div data-tw-merge=""
                                                                  class="dropdown-content rounded-md border-transparent bg-white p-2 shadow-[0px_3px_10px_#00000017] dark:border-transparent dark:bg-darkmode-600 w-40">
-                                                                <a class="cursor-pointer flex items-center p-2 transition duration-300 ease-in-out rounded-md hover:bg-slate-200/60 dark:bg-darkmode-600 dark:hover:bg-darkmode-400 dropdown-item"><i
+                                                                <a href="{{route('admin.users.edit',$user->id)}}" class="cursor-pointer flex items-center p-2 transition duration-300 ease-in-out rounded-md hover:bg-slate-200/60 dark:bg-darkmode-600 dark:hover:bg-darkmode-400 dropdown-item"><i
                                                                         data-tw-merge="" data-lucide="check-square"
                                                                         class="stroke-[1] rtl:ml-2 ltr:mr-2 h-4 w-4"></i>
-                                                                    ویرایش</a>
-                                                                <a class="cursor-pointer flex items-center p-2 transition duration-300 ease-in-out rounded-md hover:bg-slate-200/60 dark:bg-darkmode-600 dark:hover:bg-darkmode-400 dropdown-item text-danger"><i
-                                                                        data-tw-merge="" data-lucide="trash2"
-                                                                        class="stroke-[1] rtl:ml-2 ltr:mr-2 h-4 w-4"></i>
-                                                                    حذف</a>
+                                                                    ویرایش
+                                                                </a>
+{{--                                                                <a class="cursor-pointer flex items-center p-2 transition duration-300 ease-in-out rounded-md hover:bg-slate-200/60 dark:bg-darkmode-600 dark:hover:bg-darkmode-400 dropdown-item text-danger"><i--}}
+{{--                                                                        data-tw-merge="" data-lucide="trash2"--}}
+{{--                                                                        class="stroke-[1] rtl:ml-2 ltr:mr-2 h-4 w-4"></i>--}}
+{{--                                                                    حذف</a>--}}
                                                             </div>
                                                         </div>
                                                     </div>
