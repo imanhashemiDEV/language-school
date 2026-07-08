@@ -36,6 +36,12 @@
                     <div class="side-menu__link__title">کاربران</div>
                 </a>
             </li>
+            <li>
+                <a href="{{route('admin.roles.list')}}" class="side-menu__link @if(Route::is('admin.roles.list')) side-menu__link--active @endif ">
+                    <i data-tw-merge="" data-lucide="briefcase" class="stroke-[1] w-5 h-5 side-menu__link__icon"></i>
+                    <div class="side-menu__link__title">نقش ها</div>
+                </a>
+            </li>
             <!-- END: First Child -->
         </ul>
     </div>

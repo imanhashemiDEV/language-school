@@ -13,7 +13,7 @@ new #[Layout('admin::layouts.master', ['breadcrumb' => 'لیست کاربران'
 class extends Component {
 
     use WithPagination;
-
+    public $search;
     public $total_users;
 
     public function mount(): void
@@ -25,6 +25,15 @@ class extends Component {
                 ->success()
                 ->show();
         }
+    }
+
+    public function searchUser()
+    {
+        $this->users = User::query()
+            ->where('name','like' ,'%'. $this->search . '%')
+            ->orWhere('email','like' ,'%'. $this->search . '%')
+            ->orWhere('mobile','like' ,'%'. $this->search . '%')
+            ->paginate(10);
     }
 
     #[Computed()]
@@ -98,7 +107,7 @@ class extends Component {
                                     <div class="relative">
                                         <i data-tw-merge="" data-lucide="search"
                                            class="absolute inset-y-0 rtl:right-0 ltr:left-0 z-10 my-auto rtl:mr-3 ltr:ml-3 h-4 w-4 stroke-[1.3] text-slate-500"></i>
-                                        <input data-tw-merge="" type="text" placeholder="جستجوی کاربران..."
+                                        <input wire:model="search" @keyup.enter="$wire.searchUser" data-tw-merge="" type="text" placeholder="جستجوی کاربران..."
                                                class="disabled:bg-slate-100 disabled:cursor-not-allowed dark:disabled:bg-darkmode-800/50 dark:disabled:border-transparent [&[readonly]]:bg-slate-100 [&[readonly]]:cursor-not-allowed [&[readonly]]:dark:bg-darkmode-800/50 [&[readonly]]:dark:border-transparent transition duration-200 ease-in-out w-full text-sm border-slate-200 shadow-sm placeholder:text-slate-400/90 focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus:border-primary focus:border-opacity-40 dark:bg-darkmode-800 dark:border-transparent dark:focus:ring-slate-700 dark:focus:ring-opacity-50 dark:placeholder:text-slate-500/80 [&[type='file']]:border rtl:file:ml-4 ltr:file:mr-4 file:py-2 file:px-4 rtl:file:rounded-r-md ltr:file:rounded-l-md file:border-0 rtl:file:border-l-[1px] ltr:file:border-r-[1px] file:border-slate-100/10 file:text-sm file:font-semibold file:bg-slate-100 file:text-slate-500/70 hover:file:bg-200 group-[.form-inline]:flex-1 group-[.input-group]:rounded-none rtl:group-[.input-group]:[&:not(:first-child)]:border-r-transparent ltr:group-[.input-group]:[&:not(:first-child)]:border-l-transparent rtl:group-[.input-group]:first:rounded-r ltr:group-[.input-group]:first:rounded-l rtl:group-[.input-group]:last:rounded-l ltr:group-[.input-group]:last:rounded-r group-[.input-group]:z-10 rounded-[0.5rem] rtl:pr-9 ltr:pl-9 sm:w-64">
                                     </div>
                                 </div>
