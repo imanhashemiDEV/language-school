@@ -19,6 +19,8 @@ class extends Component {
     public $search;
     #[Validate('required')]
     public $name;
+    public $edit_name;
+    public $editRole=null;
 
     public function mount(): void
     {
@@ -44,6 +46,25 @@ class extends Component {
             'name' => $this->name
         ]);
         $this->reset('name');
+    }
+
+    public function setEditRole($id,$name)
+    {
+        $this->edit_name = $name;
+        $this->editRole=$id;
+    }
+
+    public function updateRole()
+    {
+        $this->validate([
+            'edit_name'=>'required'
+        ]);
+        $role = Role::query()->find($this->editRole);
+        $role->update([
+            'name'=>$this->edit_name
+        ]);
+
+        $this->editRole=null;
     }
 
     #[Computed()]
@@ -185,9 +206,40 @@ class extends Component {
                                             </td>
                                             <td data-tw-merge=""
                                                 class="px-5 border-b dark:border-darkmode-300 border-dashed py-4 dark:bg-darkmode-600">
-                                                <div class="w-40">
-                                                    {{$role->name}}
-                                                </div>
+                                                @if($editRole==$role->id)
+                                                    <div class="flex flex-col flex-1 items-center">
+                                                        <input wire:model="edit_name" data-tw-merge="" type="text"
+                                                               class="disabled:bg-slate-100 disabled:cursor-not-allowed dark:disabled:bg-darkmode-800/50 dark:disabled:border-transparent
+                                                   [&[readonly]]:bg-slate-100 [&[readonly]]:cursor-not-allowed
+                                                    [&[readonly]]:dark:bg-darkmode-800/50 [&[readonly]]:dark:border-transparent
+                                                    transition duration-200 ease-in-out w-full text-sm border-slate-200 shadow-sm
+                                                    rounded-md placeholder:text-slate-400/90 focus:ring-4 focus:ring-primary focus:ring-opacity-20
+                                                    focus:border-primary focus:border-opacity-40 dark:bg-darkmode-800 dark:border-transparent
+                                                    dark:focus:ring-slate-700 dark:focus:ring-opacity-50 dark:placeholder:text-slate-500/80
+                                                    [&[type='file']]:border rtl:file:ml-4 ltr:file:mr-4 file:py-2 file:px-4 rtl:file:rounded-r-md
+                                                    ltr:file:rounded-l-md file:border-0 rtl:file:border-l-[1px] ltr:file:border-r-[1px]
+                                                    file:border-slate-100/10 file:text-sm file:font-semibold file:bg-slate-100
+                                                    file:text-slate-500/70 hover:file:bg-200 group-[.form-inline]:flex-1 group-[.input-group]:rounded-none
+                                                    rtl:group-[.input-group]:[&:not(:first-child)]:border-r-transparent
+                                                    ltr:group-[.input-group]:[&:not(:first-child)]:border-l-transparent rtl:group-[.input-group]:first:rounded-r
+                                                    ltr:group-[.input-group]:first:rounded-l rtl:group-[.input-group]:last:rounded-l
+                                                    ltr:group-[.input-group]:last:rounded-r group-[.input-group]:z-10 first:rounded-b-none last:-mt-px
+                                                    last:rounded-t-none focus:z-10 rtl:first:md:rounded-l-none ltr:first:md:rounded-r-none rtl:first:md:rounded-br-md
+                                                    ltr:first:md:rounded-bl-md rtl:last:md:-mr-px ltr:last:md:-ml-px last:md:mt-0 rtl:last:md:rounded-r-none
+                                                    ltr:last:md:rounded-l-none rtl:last:md:rounded-tl-md ltr:last:md:rounded-tr-md
+                                                    [&:not(:first-child):not(:last-child)]:-mt-px [&:not(:first-child):not(:last-child)]:rounded-none
+                                                    rtl:[&:not(:first-child):not(:last-child)]:md:-mr-px ltr:[&:not(:first-child):not(:last-child)]:md:-ml-px
+                                                    [&:not(:first-child):not(:last-child)]:md:mt-0">
+                                                        @error('edit_name')
+                                                        <span class="block text-danger my-2">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                @else
+                                                    <div class="w-40">
+                                                        {{$role->name}}
+                                                    </div>
+                                                @endif
+
                                             </td>
                                             <td data-tw-merge=""
                                                 class="px-5 border-b dark:border-darkmode-300 border-dashed py-4 dark:bg-darkmode-600">
@@ -195,39 +247,14 @@ class extends Component {
                                                     {{ \Hekmatinasser\Verta\Facades\Verta::instance($role->created_at)->formatJalaliDate() }}
                                                 </div>
                                             </td>
+
                                             <td data-tw-merge=""
-                                                class="px-5 border-b dark:border-darkmode-300 relative border-dashed py-4 dark:bg-darkmode-600">
-                                                <div class="flex items-center justify-center">
-                                                    <div data-tw-merge="" data-tw-placement="bottom-start"
-                                                         class="dropdown relative h-5">
-                                                        <button data-tw-toggle="dropdown" aria-expanded="false"
-                                                                class="cursor-pointer h-5 w-5 text-slate-500"><i
-                                                                data-tw-merge="" data-lucide="more-vertical"
-                                                                class="stroke-[1] w-5 h-5 fill-slate-400/70 stroke-slate-400/70"></i>
-                                                        </button>
-                                                        <div data-transition="" data-selector=".show"
-                                                             data-enter="transition-all ease-linear duration-150"
-                                                             data-enter-from="absolute !mt-5 invisible opacity-0 translate-y-1"
-                                                             data-enter-to="!mt-1 visible opacity-100 translate-y-0"
-                                                             data-leave="transition-all ease-linear duration-150"
-                                                             data-leave-from="!mt-1 visible opacity-100 translate-y-0"
-                                                             data-leave-to="absolute !mt-5 invisible opacity-0 translate-y-1"
-                                                             class="dropdown-menu absolute z-[9999] hidden">
-                                                            <div data-tw-merge=""
-                                                                 class="dropdown-content rounded-md border-transparent bg-white p-2 shadow-[0px_3px_10px_#00000017] dark:border-transparent dark:bg-darkmode-600 w-40">
-                                                                <a class="cursor-pointer flex items-center p-2 transition duration-300 ease-in-out rounded-md hover:bg-slate-200/60 dark:bg-darkmode-600 dark:hover:bg-darkmode-400 dropdown-item"><i
-                                                                        data-tw-merge="" data-lucide="check-square"
-                                                                        class="stroke-[1] rtl:ml-2 ltr:mr-2 h-4 w-4"></i>
-                                                                    ویرایش
-                                                                </a>
-                                                                {{--                                                                <a class="cursor-pointer flex items-center p-2 transition duration-300 ease-in-out rounded-md hover:bg-slate-200/60 dark:bg-darkmode-600 dark:hover:bg-darkmode-400 dropdown-item text-danger"><i--}}
-                                                                {{--                                                                        data-tw-merge="" data-lucide="trash2"--}}
-                                                                {{--                                                                        class="stroke-[1] rtl:ml-2 ltr:mr-2 h-4 w-4"></i>--}}
-                                                                {{--                                                                    حذف</a>--}}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                class="px-5 border-b dark:border-darkmode-300 border-dashed py-4 dark:bg-darkmode-600">
+                                                @if($editRole==$role->id)
+                                                    <x-fas-save wire:click="updateRole"  class="text-success h-6 w-6"/>
+                                                @else
+                                                    <x-fas-edit wire:click="setEditRole('{{$role->id}}', '{{$role->name}}')" class="text-info h-6 w-6"/>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
