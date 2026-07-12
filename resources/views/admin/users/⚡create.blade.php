@@ -50,33 +50,10 @@ class extends Component {
         <div class="container">
             <div class="grid grid-cols-12 gap-x-6 gap-y-10">
                 <div class="col-span-12 sm:col-span-10 sm:col-start-2">
-
+                    @include('admin.layouts.waiting')
                     <div class="mt-7">
                         <form wire:submit="createUser" class="box box--stacked flex flex-col">
                             <div class="p-7">
-                                <div
-                                    class="mt-5 block flex-col pt-5 first:mt-0 first:pt-0 sm:flex xl:flex-row xl:items-center">
-                                    <div
-                                        class="mb-2 inline-block sm:mb-0 rtl:sm:ml-5 ltr:sm:mr-5 rtl:sm:text-left ltr:sm:text-right rtl:xl:ml-14 ltr:xl:mr-14 xl:w-60">
-                                        <div class="rtl:text-right ltr:text-left">
-                                            <div class="flex items-center">
-                                                <div class="font-medium">تصویر پروفایل</div>
-                                            </div>
-                                            <div class="mt-1.5 text-xs leading-relaxed text-slate-500/80 xl:mt-3">
-                                                یک عکس پروفایل واضح و جدید بارگذاری کنید.
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mt-3 w-full flex-1 xl:mt-0">
-                                        <div class="flex items-center">
-                                            <div
-                                                class="relative flex h-24 w-24 items-center justify-center rounded-full border border-primary/10 bg-primary/5">
-                                                <i data-tw-merge="" data-lucide="user"
-                                                   class="-mt-1.5 h-[65%] w-[65%] fill-slate-300/70 stroke-slate-400/50 stroke-[0.5]"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div
                                     class="mt-5 block flex-col pt-5 first:mt-0 first:pt-0 sm:flex xl:flex-row xl:items-center">
                                     <div

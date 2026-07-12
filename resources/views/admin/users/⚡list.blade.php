@@ -39,7 +39,9 @@ class extends Component {
     #[Computed()]
     public function users(): Paginator
     {
-        return User::query()->latest()->take(20)->paginate(10);
+        return User::query()
+            ->with('roles')
+            ->latest()->take(20)->paginate(10);
     }
 };
 ?>
@@ -101,6 +103,7 @@ class extends Component {
                                 </div>
                             </div>
                         </div>
+                        @include('admin.layouts.waiting')
                         <div class="box box--stacked flex flex-col">
                             <div class="flex flex-col gap-y-2 p-5 sm:flex-row sm:items-center">
                                 <div>
@@ -209,16 +212,6 @@ class extends Component {
                                                             </option>
                                                         </select>
                                                     </div>
-                                                    <div class="mt-4 flex items-center">
-                                                        <button data-tw-merge=""
-                                                                class="transition duration-200 border shadow-sm inline-flex items-center justify-center py-2 px-3 rounded-md font-medium cursor-pointer focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus-visible:outline-none dark:focus:ring-slate-700 dark:focus:ring-opacity-50 [&:hover:not(:disabled)]:bg-opacity-90 [&:hover:not(:disabled)]:border-opacity-90 [&:not(button)]:text-center disabled:opacity-70 disabled:cursor-not-allowed bg-secondary/70 border-secondary/70 text-slate-500 dark:border-darkmode-400 dark:bg-darkmode-400 dark:text-slate-300 [&:hover:not(:disabled)]:bg-slate-100 [&:hover:not(:disabled)]:border-slate-100 [&:hover:not(:disabled)]:dark:border-darkmode-300/80 [&:hover:not(:disabled)]:dark:bg-darkmode-300/80 rtl:mr-auto ltr:ml-auto w-32">
-                                                            بستن
-                                                        </button>
-                                                        <button data-tw-merge=""
-                                                                class="transition duration-200 border shadow-sm inline-flex items-center justify-center py-2 px-3 rounded-md font-medium cursor-pointer focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus-visible:outline-none dark:focus:ring-slate-700 dark:focus:ring-opacity-50 [&:hover:not(:disabled)]:bg-opacity-90 [&:hover:not(:disabled)]:border-opacity-90 [&:not(button)]:text-center disabled:opacity-70 disabled:cursor-not-allowed bg-primary border-primary text-white dark:border-primary rtl:mr-2 ltr:ml-2 w-32">
-                                                            اعمال
-                                                        </button>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -226,12 +219,6 @@ class extends Component {
                                 </div>
                             </div>
                             <div class="overflow-auto xl:overflow-visible">
-
-                                    <div role="alert" class="mx-5 alert relative border rounded-md px-5 py-4 border-primary text-primary dark:border-primary mb-2 flex items-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="alert-circle" class="lucide lucide-alert-circle stroke-[1] rtl:ml-2 ltr:mr-2 h-6 w-6"><circle cx="12" cy="12" r="10"></circle><line x1="12" x2="12" y1="8" y2="12"></line><line x1="12" x2="12.01" y1="16" y2="16"></line></svg>
-                                         {{session('message')}}
-                                        <button data-tw-dismiss="alert" type="button" aria-label="Close" class="text-slate-800 py-2 px-3 absolute rtl:left-0 ltr:right-0 my-auto rtl:ml-2 ltr:mr-2 btn-close"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x" class="lucide lucide-x stroke-[1] h-4 w-4"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
-                                    </div>
-
                                 <table data-tw-merge=""
                                        class="w-full rtl:text-right ltr:text-left border-b border-slate-200/60">
                                     <thead data-tw-merge="" class="">
@@ -295,9 +282,15 @@ class extends Component {
                                             </td>
                                             <td data-tw-merge=""
                                                 class="px-5 border-b dark:border-darkmode-300 border-dashed py-4 dark:bg-darkmode-600">
-                                                <a class="whitespace-nowrap font-medium" href="">
-                                                    تحلیل‌گر داده
+                                                <a class="whitespace-nowrap font-medium" href="{{route('admin.users.user_roles',$user->id)}}">
+                                                    <x-eos-role-binding class="text-success h-6 w-6 mb-2" />
                                                 </a>
+                                                <ul class="flex flex-col gap-2 list-disc">
+                                                    @foreach($user->roles as $role)
+                                                       <li>{{$role->name}}</li>
+                                                    @endforeach
+                                                </ul>
+
                                             </td>
                                             <td data-tw-merge=""
                                                 class="px-5 border-b dark:border-darkmode-300 border-dashed py-4 dark:bg-darkmode-600">
