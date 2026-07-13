@@ -18,7 +18,7 @@ class extends Component {
     #[Validate('required')]
     public $name, $gender;
     public $password;
-    public $avatar,$mobile,$email;
+    public $avatar,$mobile,$email,$is_admin;
 
     protected function rules(): array
     {
@@ -34,6 +34,7 @@ class extends Component {
         $this->mobile = $this->user->mobile;
         $this->email = $this->user->email;
         $this->gender = $this->user->gender;
+        $this->is_admin = $this->user->is_admin;
     }
 
     public function updateUser(): void
@@ -50,6 +51,7 @@ class extends Component {
             'mobile' => $this->mobile,
             'email' => $this->email,
             'gender' => $this->gender,
+            'is_admin' => $this->is_admin,
             'avatar' => $this->avatar ?? null,
             'password' => $this->password ? Hash::make($this->password) : $this->user->password,
         ]);
@@ -283,6 +285,28 @@ class extends Component {
                                         @enderror
                                     </div>
                                 </div>
+                                <div
+                                    class="mt-5 block flex-col pt-5 first:mt-0 first:pt-0 sm:flex xl:flex-row xl:items-center">
+                                    <div
+                                        class="mb-2 inline-block sm:mb-0 rtl:sm:ml-5 ltr:sm:mr-5 rtl:sm:text-left ltr:sm:text-right rtl:xl:ml-14 ltr:xl:mr-14 xl:w-60">
+                                        <div class="rtl:text-right ltr:text-left">
+                                            <div class="flex items-center">
+                                                <div class="font-medium">ادمین</div>
+                                            </div>
+                                            <div class="mt-1.5 text-xs leading-relaxed text-slate-500/80 xl:mt-3">
+                                                آیا کاربر ادمین است؟
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-3 w-full flex-1 xl:mt-0">
+                                        <div  class="flex items-center mt-5">
+                                            <input wire:model="is_admin" type="checkbox" class="transition-all duration-100 ease-in-out shadow-sm border-slate-200 cursor-pointer rounded focus:ring-4 focus:ring-offset-0 focus:ring-primary focus:ring-opacity-20 dark:bg-darkmode-800 dark:border-transparent dark:focus:ring-slate-700 dark:focus:ring-opacity-50 [&amp;[type='radio']]:checked:bg-primary [&amp;[type='radio']]:checked:border-primary [&amp;[type='radio']]:checked:border-opacity-10 [&amp;[type='checkbox']]:checked:bg-primary [&amp;[type='checkbox']]:checked:border-primary [&amp;[type='checkbox']]:checked:border-opacity-10 [&amp;:disabled:not(:checked)]:bg-slate-100 [&amp;:disabled:not(:checked)]:cursor-not-allowed [&amp;:disabled:not(:checked)]:dark:bg-darkmode-800/50 [&amp;:disabled:checked]:opacity-70 [&amp;:disabled:checked]:cursor-not-allowed [&amp;:disabled:checked]:dark:bg-darkmode-800/50" id="vertical-form-3">
+                                            <label for="vertical-form-3" class="cursor-pointer rtl:mr-2 ltr:ml-2">ادمین</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+
                             </div>
                             <div class="flex border-t border-slate-200/80 px-7 py-5 md:justify-end">
                                 <button type="submit" data-tw-merge=""
