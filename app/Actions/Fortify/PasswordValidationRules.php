@@ -16,4 +16,9 @@ trait PasswordValidationRules
     {
         return ['required', 'string', Password::default(), 'confirmed'];
     }
+
+//    public static function min()
+//    {
+//        return new static(6);
+//    }
 }

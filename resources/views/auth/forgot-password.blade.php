@@ -8,7 +8,7 @@
     <meta name="description" content="تیلوایس admin is super flexible, powerful, clean & modern responsive tailwind admin template with unlimited possibilities.">
     <meta name="keywords" content="admin template, تیلوایس Admin Template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="LEFT4CODE">
-    <title> قالب داشبورد مدیریتی</title>
+    <title>فراموشی رمز عبور</title>
     <!-- BEGIN: CSS Assets-->
     <link rel="stylesheet" href="{{url('panel/css/vendors/tippy.css')}}">
     <link rel="stylesheet" href="{{url('panel/css/app.css')}}">
@@ -29,15 +29,8 @@
                 </div>
             </div>
             <div class="mt-10">
-                <div class="text-2xl font-medium">ورود</div>
-                <div class="mt-2.5 text-slate-600">
-                    حساب کاربری ندارید؟
-                    <a class="font-medium text-primary" href="{{route('register')}}">
-                        ثبت نام
-                    </a>
-                </div>
-
-                <form method="POST" action="{{route('login.store')}}" class="mt-6">
+                <div class="text-2xl font-medium">فراموشی رمز عبور</div>
+                <form method="POST" action="{{route('mobile.password.reset')}}" class="mt-6">
                     <label data-tw-merge="" class="inline-block mb-2 group-[.form-inline]:mb-2 group-[.form-inline]:sm:mb-0 ltr:group-[.form-inline]:sm:mr-5 rtl:group-[.form-inline]:sm:ml-5 ltr:group-[.form-inline]:sm:text-right rtl:group-[.form-inline]:sm:text-left">
                         موبایل*
                     </label>
@@ -45,24 +38,6 @@
                     @error('mobile')
                     <span class="text-danger block my-1">{{ $message }}</span>
                     @enderror
-
-                    <label data-tw-merge="" class="inline-block mb-2 group-[.form-inline]:mb-2 group-[.form-inline]:sm:mb-0 ltr:group-[.form-inline]:sm:mr-5 rtl:group-[.form-inline]:sm:ml-5 ltr:group-[.form-inline]:sm:text-right rtl:group-[.form-inline]:sm:text-left mt-4">
-                        رمز عبور*
-                    </label>
-                    <input data-tw-merge="" name="password" type="password" placeholder="************" class="disabled:bg-slate-100 disabled:cursor-not-allowed dark:disabled:bg-darkmode-800/50 dark:disabled:border-transparent [&[readonly]]:bg-slate-100 [&[readonly]]:cursor-not-allowed [&[readonly]]:dark:bg-darkmode-800/50 [&[readonly]]:dark:border-transparent transition duration-200 ease-in-out w-full text-sm shadow-sm placeholder:text-slate-400/90 focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus:border-primary focus:border-opacity-40 dark:bg-darkmode-800 dark:border-transparent dark:focus:ring-slate-700 dark:focus:ring-opacity-50 dark:placeholder:text-slate-500/80 [&[type='file']]:border rtl:file:ml-4 ltr:file:mr-4 file:py-2 file:px-4 rtl:file:rounded-r-md ltr:file:rounded-l-md file:border-0 rtl:file:border-l-[1px] ltr:file:border-r-[1px] file:border-slate-100/10 file:text-sm file:font-semibold file:bg-slate-100 file:text-slate-500/70 hover:file:bg-200 group-[.form-inline]:flex-1 group-[.input-group]:rounded-none rtl:group-[.input-group]:[&:not(:first-child)]:border-r-transparent ltr:group-[.input-group]:[&:not(:first-child)]:border-l-transparent rtl:group-[.input-group]:first:rounded-r ltr:group-[.input-group]:first:rounded-l rtl:group-[.input-group]:last:rounded-l ltr:group-[.input-group]:last:rounded-r group-[.input-group]:z-10 block rounded-[0.6rem] border-slate-300/80 px-4 py-3.5">
-                    @error('password')
-                    <span class="text-danger block my-1">{{ $message }}</span>
-                    @enderror
-
-                    <div class="flex mt-4 text-xs text-slate-500 sm:text-sm">
-                        <div class="flex items-center rtl:ml-auto ltr:mr-auto">
-                            <input data-tw-merge="" type="checkbox" class="transition-all duration-100 ease-in-out shadow-sm border-slate-200 cursor-pointer rounded focus:ring-4 focus:ring-offset-0 focus:ring-primary focus:ring-opacity-20 dark:bg-darkmode-800 dark:border-transparent dark:focus:ring-slate-700 dark:focus:ring-opacity-50 [&[type='radio']]:checked:bg-primary [&[type='radio']]:checked:border-primary [&[type='radio']]:checked:border-opacity-10 [&[type='checkbox']]:checked:bg-primary [&[type='checkbox']]:checked:border-primary [&[type='checkbox']]:checked:border-opacity-10 [&:disabled:not(:checked)]:bg-slate-100 [&:disabled:not(:checked)]:cursor-not-allowed [&:disabled:not(:checked)]:dark:bg-darkmode-800/50 [&:disabled:checked]:opacity-70 [&:disabled:checked]:cursor-not-allowed [&:disabled:checked]:dark:bg-darkmode-800/50 rtl:ml-2.5 ltr:mr-2.5 border" id="remember-me">
-                            <label class="cursor-pointer select-none" for="remember-me">
-                                مرا به خاطر بسپار
-                            </label>
-                        </div>
-                        <a href="{{route('mobile.password.forget')}}">فراموشی گذرواژه؟</a>
-                    </div>
                     <div class="mt-5 text-center xl:mt-8 rtl:xl:text-right ltr:xl:text-left">
                         <button data-tw-merge="" type="submit" class="transition duration-200 border shadow-sm inline-flex items-center justify-center px-3 font-medium cursor-pointer focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus-visible:outline-none dark:focus:ring-slate-700 dark:focus:ring-opacity-50 [&:hover:not(:disabled)]:bg-opacity-90 [&:hover:not(:disabled)]:border-opacity-90 [&:not(button)]:text-center disabled:opacity-70 disabled:cursor-not-allowed bg-primary border-primary text-white dark:border-primary rounded-full w-full rtl:bg-gradient-to-l ltr:bg-gradient-to-r from-theme-1/70 to-theme-2/70 py-3.5 rtl:xl:ml-3 ltr:xl:mr-3">ورود</button>
                     </div>
