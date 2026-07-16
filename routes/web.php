@@ -2,14 +2,19 @@
 
 use App\Http\Controllers\Auth\ResetPasswordByMobileController;
 use Illuminate\Support\Facades\Route;
-use Laravel\Fortify\Features;
-use Laravel\Fortify\Http\Controllers\NewPasswordController;
-use Laravel\Fortify\RoutePath;
 
 Route::get('/', function () {
-    \App\Services\MelipayamakService::sendSMS('09167014556','سلام');
-   // return view('welcome');
+    return view('welcome');
 })->name('home');
 
-Route::get('mobile_password_forget',[ResetPasswordByMobileController::class,'forgetPassword'])->name('mobile.password.forget');
-Route::get('mobile_password_reset',[ResetPasswordByMobileController::class,'resetPassword'])->name('mobile.password.reset');
+
+// Auth Routes
+Route::get('/forgot_password', [ResetPasswordByMobileController::class, 'forgotPassword'])
+    ->name('auth.forgot_password');
+Route::post('/reset_password', [ResetPasswordByMobileController::class, 'resetPassword'])
+    ->name('auth.reset_password');
+
+Route::get('/update_password/{mobile}', [ResetPasswordByMobileController::class, 'updatePassword'])
+    ->name('auth.update_password');
+Route::post('/save_password', [ResetPasswordByMobileController::class, 'savePassword'])
+    ->name('auth.save_password');

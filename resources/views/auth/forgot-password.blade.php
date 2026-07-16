@@ -30,7 +30,9 @@
             </div>
             <div class="mt-10">
                 <div class="text-2xl font-medium">فراموشی رمز عبور</div>
-                <form method="POST" action="{{route('mobile.password.reset')}}" class="mt-6">
+
+                <form method="POST" action="{{route('auth.reset_password')}}" class="mt-6">
+                    @csrf
                     <label data-tw-merge="" class="inline-block mb-2 group-[.form-inline]:mb-2 group-[.form-inline]:sm:mb-0 ltr:group-[.form-inline]:sm:mr-5 rtl:group-[.form-inline]:sm:ml-5 ltr:group-[.form-inline]:sm:text-right rtl:group-[.form-inline]:sm:text-left">
                         موبایل*
                     </label>
@@ -51,7 +53,7 @@
     <div class="h-full col-span-7 2xl:col-span-8 lg:relative before:content-[''] before:absolute before:lg:-ml-10 rtl:before:right-0 ltr:before:left-0 before:inset-y-0 before:bg-gradient-to-b before:from-theme-1 before:to-theme-2 before:w-screen before:lg:w-[800%] after:content-[''] after:absolute after:inset-y-0 rtl:after:right-0 ltr:after:left-0 after:w-screen after:lg:w-[800%] after:bg-texture-white after:bg-fixed after:bg-center after:lg:bg-[25rem_-25rem] after:bg-no-repeat">
         <div class="sticky top-0 z-10 flex-col justify-center hidden h-screen rtl:mr-16 ltr:ml-16 lg:flex rtl:xl:mr-28 ltr:xl:ml-28 2xl:ml-36">
             <div class="text-[2.6rem] font-medium leading-[1.4] text-white xl:text-5xl xl:leading-[1.2]">
-                برای دسترسی به امکانات سایت وارد شوید
+                برای بازیابی رمز عبور موبایل خود را وارد کنید
             </div>
         </div>
     </div>

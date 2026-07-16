@@ -8,7 +8,7 @@
     <meta name="description" content="تیلوایس admin is super flexible, powerful, clean & modern responsive tailwind admin template with unlimited possibilities.">
     <meta name="keywords" content="admin template, تیلوایس Admin Template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="LEFT4CODE">
-    <title> قالب داشبورد مدیریتی</title>
+    <title>ورود</title>
     <!-- BEGIN: CSS Assets-->
     <link rel="stylesheet" href="{{url('panel/css/vendors/tippy.css')}}">
     <link rel="stylesheet" href="{{url('panel/css/app.css')}}">
@@ -61,7 +61,7 @@
                                 مرا به خاطر بسپار
                             </label>
                         </div>
-                        <a href="{{route('mobile.password.forget')}}">فراموشی گذرواژه؟</a>
+                        <a href="{{route('auth.forgot_password')}}">فراموشی گذرواژه؟</a>
                     </div>
                     <div class="mt-5 text-center xl:mt-8 rtl:xl:text-right ltr:xl:text-left">
                         <button data-tw-merge="" type="submit" class="transition duration-200 border shadow-sm inline-flex items-center justify-center px-3 font-medium cursor-pointer focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus-visible:outline-none dark:focus:ring-slate-700 dark:focus:ring-opacity-50 [&:hover:not(:disabled)]:bg-opacity-90 [&:hover:not(:disabled)]:border-opacity-90 [&:not(button)]:text-center disabled:opacity-70 disabled:cursor-not-allowed bg-primary border-primary text-white dark:border-primary rounded-full w-full rtl:bg-gradient-to-l ltr:bg-gradient-to-r from-theme-1/70 to-theme-2/70 py-3.5 rtl:xl:ml-3 ltr:xl:mr-3">ورود</button>
