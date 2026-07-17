@@ -9,7 +9,7 @@
     <meta name="author" content="LEFT4CODE">
     <title>{{ $title ?? config('app.name') }}</title>
     <!-- BEGIN: CSS Assets-->
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
+    <link href="{{url('panel/css/vendors/daisyUI.css')}}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="{{url('panel/css/vendors/litepicker.css')}}">
     <link rel="stylesheet" href="{{url('panel/css/vendors/tiny-slider.css')}}">
     <link rel="stylesheet" href="{{url('panel/css/vendors/tippy.css')}}">
@@ -305,7 +305,7 @@
 <script src="{{url('panel/js/components/base/tippy.js')}}"></script>
 <script src="{{url('panel/js/themes/echo.js')}}"></script>
 <script src="{{url('panel/js/components/quick-search.js')}}"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{url('panel/js/vendors/sweetalert2@11.js')}}"></script>
 <!-- END: Vendor JS Assets-->
 <!-- BEGIN: Pages, layouts, components JS Assets-->
 <!-- END: Pages, layouts, components JS Assets-->

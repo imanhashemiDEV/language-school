@@ -8,3 +8,4 @@ Route::livewire('/create_user', 'admin::users.create')->name('admin.users.create
 Route::livewire('/edit_user/{user}', 'admin::users.edit')->name('admin.users.edit');
 Route::livewire('/roles', 'admin::roles.list')->name('admin.roles.list');
 Route::livewire('/user_roles/{user}', 'admin::users.user_roles')->name('admin.users.user_roles');
+Route::livewire('/categories', 'admin::categories.list')->name('admin.categories.list');
